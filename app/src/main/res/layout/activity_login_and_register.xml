@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center"
+    tools:context=".LoginAndRegister">
+
+
+
+
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:hint="Email"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:drawableStart="@drawable/profilepic"
+            android:drawablePadding="8dp"
+            android:background="@drawable/bgedittext"
+            android:imeOptions="actionNext" />
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/login_pass"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:fontFamily="serif"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/bgedittext"
+            android:layout_below="@id/login_email"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="8dp"
+            android:hint="Password" />
+
+    <TextView
+        android:id="@+id/forgetpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forget?"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/login_pass"
+        android:layout_marginEnd="14dp"
+        android:textSize="14sp"
+        android:padding="5dp"
+
+        />
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="#673AB7"
+        android:fontFamily="serif"
+        android:padding="10dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/progressBar"
+        android:text="LOGIN OR REGISTER" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/login_pass"
+        android:padding="8dp"
+        android:indeterminateTint="#673AB7"
+        android:visibility="gone" />
+
+</RelativeLayout>

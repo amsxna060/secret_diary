@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "662994680027",
+    "project_id": "secretdiary-ad2a3",
+    "storage_bucket": "secretdiary-ad2a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662994680027:android:6f3cd08f4c35ec855d74fe",
+        "android_client_info": {
+          "package_name": "com.amansiol.magicdiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662994680027-s1tfdr0qth5cd5scrjdhvdhvob2a7kfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHf6im8KJ1UgCNCLTs1sytcBnOJrLYVbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662994680027-s1tfdr0qth5cd5scrjdhvdhvob2a7kfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

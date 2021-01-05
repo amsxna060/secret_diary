@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="3dp"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_alignParentTop="true"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Secret Diary"
+                android:textStyle="bold"
+                android:id="@+id/way_for_secret_door"
+                android:fontFamily="serif"
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabaddnotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_baseline_note_add_24"
+        android:layout_marginEnd="16dp"
+        app:backgroundTint="#673AB7"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="TODO" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/notesrecycler"
+        tools:listitem="@layout/one_note"
+        app:spanCount="3"
+        android:layout_below="@+id/toolbar"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+        />
+
+
+</RelativeLayout>

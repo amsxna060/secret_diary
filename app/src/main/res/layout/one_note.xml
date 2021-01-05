@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#D7020517">
+
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heading"
+            android:textStyle="bold"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:padding="5dp"
+            android:layout_marginStart="8dp"/>
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hjhkj hkj hkjh kjh kj"
+            android:textColor="@color/white"
+            android:maxLines="3"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:padding="5dp"
+            android:layout_below="@id/heading"
+            android:layout_marginStart="8dp"
+            />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:30 am"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:layout_below="@id/description"
+            android:layout_marginStart="8dp"
+            />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="04/01/2021"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:layout_below="@id/time"
+            android:layout_marginStart="8dp"
+            />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

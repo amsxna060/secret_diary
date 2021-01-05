@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".EditAndShowNotes">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Secret Diary"
+                android:textStyle="bold"
+                android:id="@+id/way_for_secret_door"
+                android:fontFamily="serif"
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+    <EditText
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:hint="Title"
+        android:gravity="center"
+        android:layout_below="@+id/toolbar"
+        android:textColorHint="#CDFFFFFF"
+        android:cursorVisible="true"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/white"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/heading">
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:minLines="5"
+            android:gravity="left"
+            android:hint="Write your Thoughts..."
+            android:textColorHint="#CDFFFFFF"
+            android:cursorVisible="true"
+            android:layout_margin="16dp"
+            android:textColor="@color/white"
+            style="@style/TextAppearance.AppCompat.Body2"
+            />
+    </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:listitem="@layout/onecolor"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>
