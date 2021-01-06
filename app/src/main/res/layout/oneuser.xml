@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true"
     app:cardCornerRadius="4dp"
-    app:cardPreventCornerOverlap="true"
+    android:layout_marginTop="4dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="5dp">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,11 +20,13 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/profilepic"
+            android:tint="#D5D2D2"
             android:scaleType="centerCrop"
             app:siBorderColor="#000000"
             app:siBorderWidth="1dp"
             android:clickable="true"
             app:siBorderType="stroke"
+            android:forceDarkAllowed="false"
             android:layout_margin="2dp"
             />
         <TextView
@@ -35,8 +37,9 @@
             android:layout_toRightOf="@+id/allusers_pic"
             android:layout_marginLeft="16dp"
             android:textSize="20dp"
+            android:forceDarkAllowed="false"
             android:padding="2dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             />
         <TextView
             android:id="@+id/allusers_status"
@@ -46,6 +49,8 @@
             android:layout_toRightOf="@+id/allusers_pic"
             android:layout_marginLeft="16dp"
             android:textSize="14dp"
+            android:textColor="#EAE3E3"
+            android:forceDarkAllowed="false"
             android:padding="2dp"
             android:layout_marginTop="2dp"
             android:layout_below="@+id/allusers_name"

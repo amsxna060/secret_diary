@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/background"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -102,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 app:srcCompat="@drawable/heartbeat"
-                android:background="@drawable/bgrecevier"
+                android:background="@drawable/senderbg"
                 android:layout_toRightOf="@+id/histypinganichat_pic"
 
                 />

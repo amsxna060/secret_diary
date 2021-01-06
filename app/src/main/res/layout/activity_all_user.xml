@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".AllUserActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allusers_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/oneuser"
         android:layout_centerInParent="true"
         />
 </RelativeLayout>

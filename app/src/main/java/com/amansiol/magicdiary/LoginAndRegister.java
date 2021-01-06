@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -81,25 +83,7 @@ public class LoginAndRegister extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             progressBar.setVisibility(View.GONE);
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String useremail=user.getEmail();
-                            String userUID=user.getUid();
-                            HashMap<Object,String> userhashmap=new HashMap<>();
-                            userhashmap.put("email",useremail);
-                            userhashmap.put("UID",userUID);
-                            userhashmap.put("name","User Name");
-                            userhashmap.put("number","+91 0000000000");
-                            userhashmap.put("dob","");
-                            userhashmap.put("onlineStatus","online");
-                            userhashmap.put("typing","noOne");
-                            userhashmap.put("coverimage","");
-                            userhashmap.put("image","");
-                            userhashmap.put("gender","Male");
-                            userhashmap.put("isverified","Unverified");
-                            FirebaseFirestore firebaseDatabase=FirebaseFirestore.getInstance();
-                            CollectionReference myref=firebaseDatabase.collection("Users");
-                            myref.document(userUID).set(userhashmap);
-                            Intent intent=new Intent(LoginAndRegister.this,MainActivity.class);
+                            Intent intent=new Intent(LoginAndRegister.this,BasicActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
 //                            Animatoo.animateSplit(RegisterActivity.this);
@@ -114,7 +98,7 @@ public class LoginAndRegister extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                progressBar.setAlpha(0);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
@@ -171,6 +155,7 @@ public class LoginAndRegister extends AppCompatActivity {
 
                     }else {
                         registerUser(email,password);
+                        Toast.makeText(getApplicationContext(),"registering...",Toast.LENGTH_LONG).show();
                     }
                 }else {
                     Toast.makeText(LoginAndRegister.this, "There is a problem, please try again later.",Toast.LENGTH_SHORT).show();

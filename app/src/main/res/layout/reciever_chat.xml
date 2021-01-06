@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
     android:layout_margin="3dp"
     android:id="@+id/messageLayout"
-    android:background="@drawable/bgrecevier"
+    android:background="@android:color/transparent"
     android:layout_gravity="end"
     >
     <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/chat_pic"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:tint="#B9B6BD"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:tint="@color/unisex"
+        android:visibility="visible"
         android:layout_alignParentEnd="true"
         android:src="@drawable/profilepic"/>
 
@@ -21,16 +22,21 @@
         android:id="@+id/chat_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:textColor="#000000"
+        android:paddingTop="7dp"
+        android:textColor="@color/unisex"
         android:textSize="18sp"
-        android:text="message"
         android:maxWidth="300dp"
+        android:minWidth="80dp"
         android:clickable="true"
         android:autoLink="all"
+        android:forceDarkAllowed="false"
+        android:gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bgrecevier"
         android:layout_toStartOf="@+id/chat_pic"
         android:paddingEnd="10dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="7dp"
         android:paddingStart="15dp"
         android:focusable="true" />
 
@@ -42,6 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/chat_msg"
         android:visibility="gone"
+        android:text="03:30 am"
+        android:forceDarkAllowed="false"
+        android:textColor="@color/unisex"
         android:layout_alignEnd="@+id/chat_msg"
         />
     <TextView
@@ -51,6 +60,9 @@
         android:layout_below="@id/chat_msg"
         android:layout_alignStart="@+id/chat_msg"
         android:visibility="gone"
+        android:text="Seen"
+        android:textColor="@color/unisex"
+        android:forceDarkAllowed="false"
         android:fontFamily="monospace"
         />
 

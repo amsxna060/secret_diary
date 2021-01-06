@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center"
+    tools:context=".BasicActivity">
+
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/profilepic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_round_person_24"
+        app:civ_border="true"
+        app:civ_border_color_direction="top_to_bottom"
+        app:civ_border_color_end="@color/white"
+        app:civ_border_color_start="#BFBFBF"
+        app:civ_border_width="2dp"
+        app:civ_shadow="true"
+        android:layout_centerHorizontal="true"
+        app:civ_shadow_color="@color/black"
+        app:civ_shadow_gravity="bottom"
+        app:civ_shadow_radius="1dp" />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/addprofilepic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/profilepic"
+        android:layout_alignBottom="@+id/profilepic"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="-2dp"
+        android:src="@drawable/ic_baseline_add_circle_24"
+        android:tint="@color/black"
+        app:civ_border="true"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1.5dp"
+
+        />
+
+    <EditText
+        android:id="@+id/login_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:hint="Name"
+        android:paddingTop="12dp"
+        android:layout_below="@+id/profilepic"
+        android:paddingBottom="12dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:drawableStart="@drawable/profilepic"
+        android:drawablePadding="8dp"
+        android:background="@drawable/bgedittext"
+        android:imeOptions="actionNext" />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/login_status"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:imeOptions="actionDone"
+        android:fontFamily="serif"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/bgedittext"
+        android:layout_below="@id/login_name"
+        android:drawableStart="@drawable/ic_baseline_local_fire_department_24"
+        android:drawablePadding="8dp"
+        android:hint="Status" />
+
+
+    <Button
+        android:id="@+id/login_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="#673AB7"
+        android:fontFamily="serif"
+        android:padding="10dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/progressBar"
+        android:text="Next" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/login_status"
+        android:padding="8dp"
+        android:indeterminateTint="#673AB7"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#020517</color>
+    <color name="unisex">#958B8B</color>
+    <color name="colorPrimary">#5770f3</color>
+    <color name="colorPrimaryDark">#5770f3</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="gradient_start">#5770f3</color>
+    <color name="gradient_end">#8e5aeb</color>
+    <color name="profile_desc">#D1D1FF</color>
+    <color name="bg_meta_container">#000000</color>
+    <color name="profile_default_tint">#e0e0e0</color>
 </resources>

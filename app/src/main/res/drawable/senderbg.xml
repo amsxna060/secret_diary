@@ -5,9 +5,12 @@
         android:endColor="@android:color/transparent"
         android:startColor="@android:color/transparent" />
 
-    <corners android:radius="12dp" />
+    <corners android:radius="5dp" android:topLeftRadius="1dp"/>
 
     <stroke
         android:width="2dp"
-        android:color="#2546FA" />
+        android:color="#2546FA"
+        android:dashGap="5dp"
+        android:dashWidth="100dp"/>
+
 </shape>
