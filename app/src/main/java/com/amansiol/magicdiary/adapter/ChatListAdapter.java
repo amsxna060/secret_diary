@@ -50,12 +50,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         final String userImage=chatlist.get(position).getImage();
         String userName=chatlist.get(position).getName();
         String lastMessage=lastMessageMap.get(hisUid);
-
-
         holder.chatlist_name.setText(userName);
-
-
-
         if(lastMessage==null||lastMessage.equals("default")){
             holder.chatlist_lastmessage.setVisibility(View.GONE);
 

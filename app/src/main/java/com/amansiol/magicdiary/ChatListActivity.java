@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.amansiol.magicdiary.adapter.ChatListAdapter;
 import com.amansiol.magicdiary.model.Chat;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChatListActivity extends AppCompatActivity {
+
     FirebaseAuth firebaseAuth;
     RecyclerView recyclerView;
     List<Chatlist> chatlistModels;
@@ -42,15 +44,20 @@ public class ChatListActivity extends AppCompatActivity {
     ChatListAdapter adapterChatList;
     String theLastMessage="default";
     FloatingActionButton gotouserfab;
+    ProgressBar chatlistprogress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
+
         firebaseAuth=FirebaseAuth.getInstance();
         recyclerView=findViewById(R.id.chatlistRecyler);
         currentuser=firebaseAuth.getCurrentUser();
         chatlistModels=new ArrayList<>();
         gotouserfab=findViewById(R.id.gotouserfab);
+        chatlistprogress=findViewById(R.id.chatlistprogressbar);
+
+
         reference= FirebaseDatabase.getInstance().getReference("Chatlist").child(currentuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -60,6 +67,7 @@ public class ChatListActivity extends AppCompatActivity {
                     Chatlist chatlistModel=ds.getValue(Chatlist.class);
                     chatlistModels.add(chatlistModel);
                 }
+
                 loadChats();
             }
 
@@ -75,6 +83,8 @@ public class ChatListActivity extends AppCompatActivity {
 //                Animatoo.animateSlideUp(getActivity());
             }
         });
+
+
     }
     private void loadChats() {
         userList=new ArrayList<>();
@@ -147,6 +157,7 @@ public class ChatListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
     }
 
     private void lastMessage(final String uid) {

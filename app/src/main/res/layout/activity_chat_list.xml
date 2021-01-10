@@ -28,4 +28,12 @@
         android:id="@+id/gotouserfab"
         android:backgroundTint="#673AB7"
         android:focusable="true" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/purple_200"
+        android:id="@+id/chatlistprogressbar"
+        android:visibility="gone"
+        />
 </RelativeLayout>

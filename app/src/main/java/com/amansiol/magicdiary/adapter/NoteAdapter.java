@@ -55,11 +55,24 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
 
        if(title!=null){
+           if(title.length()>10)
+           holder.heading.setText(title.substring(0,9)+"...");
+           else if(title.isEmpty())
+               holder.heading.setText("No Title");
+           else
            holder.heading.setText(title);
+
+       }else {
+
        }
        if(description!=null)
-       {
+       {if(title.length()>24)
+           holder.description.setText(description.substring(0,24)+"...");
+       else
            holder.description.setText(description);
+       }
+       else {
+           holder.heading.setText("No Written Yet");
        }
        holder.time.setText(time);
        holder.date.setText(date);
@@ -70,11 +83,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                Intent intent= new Intent(context, EditAndShowNotes.class);
                intent.putExtra("title",title);
                intent.putExtra("description",description);
+               intent.putExtra("edit","edit");
+               intent.putExtra("timestamp",timestamp);
                context.startActivity(intent);
            }
        });
-//        Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_up);
-//        holder.itemView.startAnimation(animation);
     }
 
     @Override

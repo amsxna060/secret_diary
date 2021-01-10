@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
@@ -28,9 +29,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,9 +42,11 @@ import android.widget.Toast;
 import com.amansiol.magicdiary.adapter.ChatAdapter;
 import com.amansiol.magicdiary.model.Chat;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +56,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,10 +91,19 @@ public class ChatActivity extends AppCompatActivity {
     RelativeLayout hiswholetypinganimationlayout;
     ImageView hisimagetypinganimation;
     ImageView hisheartbeattypingani;
+    SwipeRefreshLayout mMessageLayout;
+    private  static final int NUMBER_OF_MESSAGES=15;
+    private  static  int page=1;
+    Boolean isScrolling = false;
+    int currentItems, totalItems, scrollOutItems,prev_visibleitem;
+    LinearLayoutManager linearLayoutManager;
     ImageView chatActmenu;
     // ImageButton sendimagemsgbtn;
     private SoundPool soundPool;
     private int sound1, sound2, sound3;
+    ProgressBar chatscroll;
+    private DatabaseReference RootRef;
+
 
 //    private  RequestQueue  requestQueue;
 //    private boolean notify=false;
@@ -107,6 +123,8 @@ public class ChatActivity extends AppCompatActivity {
         hisimagetypinganimation=findViewById(R.id.histypinganichat_pic);
         hisheartbeattypingani=findViewById(R.id.histypinganim);
         hiswholetypinganimationlayout=findViewById(R.id.hiswholetypinganilayout);
+        chatscroll=findViewById(R.id.chatscroll);
+//        mMessageLayout=findViewById(R.id.loadmorechat);
 //        chatActmenu=findViewById(R.id.chatActmenu);
 //        sendimagemsgbtn=findViewById(R.id.send_pic_msg);
 //        AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -120,12 +138,11 @@ public class ChatActivity extends AppCompatActivity {
 //        sound1 = soundPool.load(ChatActivity.this, R.raw.got_it_done, 1);
 //        sound2 = soundPool.load(ChatActivity.this, R.raw.swiftly, 1);
 //        sound3 = soundPool.load(ChatActivity.this, R.raw.filling_your_inbox, 1);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        RootRef = FirebaseDatabase.getInstance().getReference();
+        linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
-        chatrecycler.setHasFixedSize(true);
         chatrecycler.setLayoutManager(linearLayoutManager);
-
-//        requestQueue= Volley.newRequestQueue(getApplicationContext());
+//      requestQueue= Volley.newRequestQueue(getApplicationContext());
 
         Intent intent=getIntent();
         hisUid=intent.getStringExtra("hisUID");
@@ -147,8 +164,10 @@ public class ChatActivity extends AppCompatActivity {
 
                     if(typingstatus.equals(myUid)){
                         chat_status.setText("typing....");
-
-//                        hiswholetypinganimationlayout.setVisihtbility(View.VISIBLE);
+/*
+animation
+ */
+//                        hiswholetypinganimationlayout.setVisibility(View.VISIBLE);
 //                        try {
 //                            Picasso.get().load(hisImage).into(hisimagetypinganimation);
 //                        }catch (Exception e)
@@ -181,16 +200,6 @@ public class ChatActivity extends AppCompatActivity {
 //                            drawable.start();
 //                        }
 
-
-
-//                        d.registerAnimationCallback(new Animatable2.AnimationCallback() {
-//                            @Override
-//                            public void onAnimationEnd(Drawable drawable) {
-//                                avd.start();
-//                            }
-//                        });
-//
-//                        drawable.start();
                     }else {
                         String onlinestatus=""+ds.child("onlineStatus").getValue();
                         if(onlinestatus.equals("online")){
@@ -219,6 +228,40 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        chatrecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrolling = true;
+
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = linearLayoutManager.getChildCount();
+                totalItems = linearLayoutManager.getItemCount();
+                scrollOutItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if(isScrolling && (scrollOutItems<=1) && chatList.size()>13)
+                    {
+                        Log.d("amolcurrentItems",""+currentItems);
+                        Log.d("amoltotalItems",""+totalItems);
+                        Log.d("amolscrollOutItems",""+scrollOutItems);
+                        chatscroll.setVisibility(View.VISIBLE);
+                        isScrolling = false;
+                        page=page+1;
+                        Toast.makeText(getApplicationContext(),""+page,Toast.LENGTH_LONG).show();
+                        readMessages();
+                    }
+
+            }
+        });
+        readMessages();
         query=mref.orderByChild("UID").equalTo(user.getUid());
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -273,8 +316,6 @@ public class ChatActivity extends AppCompatActivity {
             }
 
         });
-
-
 
         final DatabaseReference chatref1=FirebaseDatabase.getInstance().getReference("Chatlist")
                 .child(myUid)
@@ -346,8 +387,9 @@ public class ChatActivity extends AppCompatActivity {
 //            }
 //        });
 //        popupMenuchat.show();
-        readMessages();
+
     }
+
     private void seenMessages() {
         DbRefForSeen=FirebaseDatabase.getInstance().getReference("Chats");
         SeenListener=DbRefForSeen.addValueEventListener(new ValueEventListener() {
@@ -371,58 +413,93 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void readMessages() {
-        chatList=new ArrayList<>();
-        DatabaseReference chatdbref;
-        FirebaseDatabase chatdb;
-        chatdb = FirebaseDatabase.getInstance();
-//        chatdb.setPersistenceEnabled(true);
-        chatdbref=chatdb.getReference("Chats");
-//        chatdbref.keepSynced(true);
-        chatdbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                chatList.clear();
-                for(DataSnapshot ds:snapshot.getChildren()){
+       chatList=new ArrayList<>();
+       DatabaseReference chatreference =  FirebaseDatabase.getInstance()
+               .getReference("Messages").child(myUid).child(hisUid);
+       Query query = chatreference.limitToLast(page*NUMBER_OF_MESSAGES);
+       query.addChildEventListener(new ChildEventListener() {
+           @Override
+           public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+               Chat chat=snapshot.getValue(Chat.class);
+               chatList.add(chat);
+               chatscroll.setVisibility(View.GONE);
+               chatAdapter=new ChatAdapter(ChatActivity.this,chatList,hisImage,myimage);
+               chatrecycler.setAdapter(chatAdapter);
+               chatAdapter.notifyDataSetChanged();
 
-                    Chat chat=ds.getValue(Chat.class);
-                    if(chat.getReceiver().equals(myUid)&&chat.getSender().equals(hisUid) ||
-                            chat.getReceiver().equals(hisUid)&&chat.getSender().equals(myUid)){
-                        chatList.add(chat);
-                    }
-                }
+           }
 
-                while (chatList.size()>15) {
-                    chatList.remove(0);
-                }
-//                Toast.makeText(getApplicationContext(),""+chatList.size(),Toast.LENGTH_LONG).show();
-                chatAdapter=new ChatAdapter(ChatActivity.this,chatList,hisImage,myimage);
-                chatAdapter.notifyDataSetChanged();
-                chatrecycler.setAdapter(chatAdapter);
-            }
+           @Override
+           public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+           }
 
-            }
-        });
+           @Override
+           public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
 
+           }
+
+           @Override
+           public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+           }
+       });
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                chatList.clear();
+//                int c=0;
+//                for(DataSnapshot ds:snapshot.getChildren()){
+//
+//                    Chat chat=ds.getValue(Chat.class);
+//                    chatList.add(chat);
+//                    Toast.makeText(getApplicationContext(),""+c++,Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//                chatscroll.setVisibility(View.GONE);
+//                chatAdapter=new ChatAdapter(ChatActivity.this,chatList,hisImage,myimage);
+//                chatrecycler.setAdapter(chatAdapter);
+//                chatAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
+
     private void SendMessage(final String my_msg) {
 
+        String messageSenderRef = "Messages/" + myUid + "/" + hisUid;
+        String messageReceiverRef = "Messages/" + hisUid + "/" + myUid;
+        DatabaseReference userMessageKeyRef = RootRef.child("Messages")
+                .child(myUid).child(hisUid).push();
+        String messagePushID = userMessageKeyRef.getKey();
+
         String timestamp=String.valueOf(System.currentTimeMillis());
-        DatabaseReference msgref;
-        FirebaseDatabase msgdb;
-        msgdb=FirebaseDatabase.getInstance();
-//        msgdb.setPersistenceEnabled(true);
-        msgref = msgdb.getReference();
-//        msgref.keepSynced(true);
         HashMap<String,Object> chatsmsg=new HashMap<>();
         chatsmsg.put("sender",myUid);
         chatsmsg.put("receiver",hisUid);
         chatsmsg.put("message",my_msg);
         chatsmsg.put("timestamp",timestamp);
         chatsmsg.put("isseen",false);
-        msgref.child("Chats").push().setValue(chatsmsg);
+        chatsmsg.put("messageID",messagePushID);
+        Map messageBodyDetails = new HashMap();
+        messageBodyDetails.put(messageSenderRef + "/" + messagePushID, chatsmsg);
+        messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, chatsmsg);
+
+        RootRef.updateChildren(messageBodyDetails);
+        page=1;
+
+//      msgref.child("Chats").push().setValue(chatsmsg);
+
 
 //        final DatabaseReference database=FirebaseDatabase.getInstance().getReference("Users").child(myUid);
 //        database.addValueEventListener(new ValueEventListener() {
@@ -536,8 +613,8 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        checkUserLoginState();
         super.onStart();
+        checkUserLoginState();
     }
 
 //    @Override

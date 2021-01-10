@@ -53,7 +53,6 @@
                     android:id="@+id/chat_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Online"
                     android:layout_toRightOf="@+id/chat_pic"
                     android:layout_marginLeft="16dp"
                     android:textSize="14dp"
@@ -72,14 +71,27 @@
         android:paddingBottom="1dp"
         android:layout_above="@+id/entry_style"
         android:layout_below="@+id/chattoolbar">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chatsmessagesscreen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            tools:listitem="@layout/sender_chat"
-            android:layout_above="@+id/hiswholetypinganilayout"
-            />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatsmessagesscreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                tools:listitem="@layout/sender_chat"
+                android:layout_above="@+id/hiswholetypinganilayout"
+                />
+
+         <ProgressBar
+             android:id="@+id/chatscroll"
+             android:layout_width="match_parent"
+             android:layout_height="30dp"
+             android:visibility="gone"
+             android:background="@color/profile_default_tint"
+             android:layout_centerHorizontal="true"
+             android:elevation="4dp"
+             android:indeterminateTint="#3F51B5"
+             />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

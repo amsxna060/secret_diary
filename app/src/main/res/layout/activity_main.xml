@@ -55,9 +55,8 @@
         android:id="@+id/notesrecycler"
         tools:listitem="@layout/one_note"
         app:spanCount="3"
-        android:layout_below="@+id/toolbar"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-
+        android:layout_below="@+id/toolbar"
         />
 
 

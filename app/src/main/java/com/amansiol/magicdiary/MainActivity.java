@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -70,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
         int orientation = this.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             // code for portrait mode
-            gridLayoutManager = new GridLayoutManager(getApplicationContext(),3);
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         } else {
             // code for landscape mode
-            gridLayoutManager = new GridLayoutManager(getApplicationContext(),4);
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(), 4);
         }
         // set the layout manager to RecyclerView
         notesrecycler.setLayoutManager(gridLayoutManager);
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         noteslist = new ArrayList<>();
 
         getAllNotesFromCloudStore();
-
 
         wayForSecretDoor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +94,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(getApplicationContext(), EditAndShowNotes.class);
-                startActivity(intent);
-            }
+        addFab.setOnClickListener(v -> {
+            Intent intent= new Intent(getApplicationContext(), EditAndShowNotes.class);
+            startActivity(intent);
         });
 
     }
@@ -111,24 +108,16 @@ public class MainActivity extends AppCompatActivity {
                     .document(mUID)
                     .collection("OneUserNotes")
                     .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            noteslist.clear();
-                            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                Note note = documentSnapshot.toObject(Note.class);
-                                noteslist.add(note);
-                            }
-                            noteAdapter = new NoteAdapter(getApplicationContext(),noteslist);
-                            notesrecycler.setAdapter(noteAdapter);
-                            noteAdapter.notifyDataSetChanged();
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        noteslist.clear();
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Note note = documentSnapshot.toObject(Note.class);
+                            noteslist.add(note);
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull @NotNull Exception e) {
-                    Toast.makeText(getApplicationContext(),""+e.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            });
+                        noteAdapter = new NoteAdapter(getApplicationContext(),noteslist);
+                        notesrecycler.setAdapter(noteAdapter);
+                        noteAdapter.notifyDataSetChanged();
+                    }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(),""+e.getMessage(),Toast.LENGTH_LONG).show());
         }
         else {
             checkUserLoginState();

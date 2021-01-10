@@ -75,7 +75,6 @@ public class LoginAndRegister extends AppCompatActivity {
     }
 
     private void registerUser(String sEmail, String sPass) {
-        progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(sEmail,sPass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -107,7 +106,6 @@ public class LoginAndRegister extends AppCompatActivity {
 
     }
     private void LoginUser(String sEmail, String sPass) {
-        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(sEmail, sPass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -144,6 +142,7 @@ public class LoginAndRegister extends AppCompatActivity {
 
     }
     private void performLoginOrAccountCreation(final String email, final String password){
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(this, new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<SignInMethodQueryResult> task) {
@@ -158,6 +157,7 @@ public class LoginAndRegister extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"registering...",Toast.LENGTH_LONG).show();
                     }
                 }else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(LoginAndRegister.this, "There is a problem, please try again later.",Toast.LENGTH_SHORT).show();
                 }
                 }

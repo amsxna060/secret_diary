@@ -32,6 +32,7 @@ public class EditAndShowNotes extends AppCompatActivity {
      EditText description;
      Note note;
      String timestamp;
+     String edit;
     FirebaseFirestore firestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,11 @@ public class EditAndShowNotes extends AppCompatActivity {
                    .getColor(getApplicationContext(),
                         R.color.background));
         setContentView(R.layout.activity_edit_and_show_notes);
-
+        edit = getIntent().getStringExtra("edit");
         title=findViewById(R.id.heading);
         description=findViewById(R.id.description);
         firestore=FirebaseFirestore.getInstance();
         note=new Note();
-
-
     }
 
     void saveDataToFireStore(){
@@ -75,7 +74,22 @@ public class EditAndShowNotes extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        saveDataToFireStore();
+        if(edit!=null&&edit=="edit"){
+            title.setText(getIntent().getStringExtra("title"));
+            description.setText(getIntent().getStringExtra("description"));
+            note.setTitle(title.getText().toString());
+            note.setDescription(description.getText().toString());
+            note.setTimestamp(getIntent().getStringExtra("timestamp"));
+            firestore.collection("Notes")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .collection("OneUserNotes")
+                    .document(getIntent().getStringExtra("timestamp"))
+                    .set(note, SetOptions.merge())
+                    .addOnSuccessListener(unused -> Toast.makeText(getApplicationContext(),"Saved...",Toast.LENGTH_LONG).show())
+                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),""+e.getMessage(),Toast.LENGTH_LONG).show());
+        }else {
+            saveDataToFireStore();
+        }
         super.onBackPressed();
     }
 
